@@ -8,7 +8,6 @@
 // signal catcher method
 void sigCatcher()
 {
-    // signal(SIGINT, sigCatcher);
     printf("PID %d caught one\n", getpid());
     kill(getpid() + 1, SIGINT);
 }
@@ -18,7 +17,7 @@ int main()
     pid_t pid;
     signal(SIGINT, sigCatcher);
 
-
+  // creating the 5 children processes
     for (int i = 0; i < 5; i++)
     {
         if (pid = fork() == 0)
@@ -27,14 +26,19 @@ int main()
             break;
         }
     }
-
+// at a child process
     if (pid == 0)
     {
         sleep(1);
         kill(getpid() + 1, SIGINT);
     }
-
-    if (pid > 0)
+    // unsuccesful in creating a child
+    else if(pid < 0)
+    {
+      exit(1);
+    }
+    // at a parent process
+    else
     {
         pause();
         if (getpid() != getppid() + 5)
@@ -45,12 +49,13 @@ int main()
     }
 
     sleep(1);
+    // kill all the zombies
     for (int i = 0; i < 5; i++)
     {
         int zombie = wait(NULL);
             printf("PID %d is dead\n",zombie);
     }
-    exit(0);
+    // exit(0);
 
     return 0;
 }
