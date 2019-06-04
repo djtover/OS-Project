@@ -8,7 +8,7 @@
 // signal catcher method
 void sigCatcher()
 {
-    signal(SIGINT, sigCatcher);
+    // signal(SIGINT, sigCatcher);
     printf("PID %d caught one\n", getpid());
     kill(getpid() + 1, SIGINT);
 }
@@ -43,16 +43,12 @@ int main()
         }
         exit(0);
     }
-    // printf("pid = %d",pid);
 
-    // sleep(1);
-    for (int i = 1; i < 6; i++)
+    sleep(1);
+    for (int i = 0; i < 5; i++)
     {
         int zombie = wait(NULL);
             printf("PID %d is dead\n",zombie);
-
-        // waitpid(getpid() + i, 0, 0);
-        // printf("PID %d is dead\n",getpid()+i);
     }
     exit(0);
 
