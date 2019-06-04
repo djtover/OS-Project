@@ -55,7 +55,6 @@ int main()
         int zombie = wait(NULL);
             printf("PID %d is dead\n",zombie);
     }
-    // exit(0);
 
     return 0;
 }
